@@ -36,17 +36,36 @@
 	<h2>exo4</h2>
 
 	<?php 
-	foreach ($dbh->query('SELECT * FROM clients AS C, cards AS A WHERE C.cardNumber = A.cardNumber
-		AND A.cardTypesId = 1')as $row) {
+	foreach ($dbh->query('SELECT * FROM clients AS client, cards AS card WHERE card.cardNumber = client.cardNumber AND card.cardTypesId = 1')as $row) {
 		echo $row['lastName']." ".$row['firstName']."<br/> ";
-}
-?>
-<h2>exo5</h2>
-<?php
-foreach ($dbh->query('SELECT * from clients WHERE lastName LIKE "M%" ORDER BY lastName ASC ') as $row){
-	echo "Nom: ".$row['lastName']." "."Prénom:".$row['firstName']."<br/> " ;
-}
-?>
+	}
+	?>
+	<h2>exo5</h2>
+	<?php
+	foreach ($dbh->query('SELECT * from clients WHERE lastName LIKE "M%" ORDER BY lastName ASC ') as $row){
+		echo "Nom: ".$row['lastName']."<br/>"."Prénom: ".$row['firstName']."<br/> " ;
+	} 
+	?>
+
+	<h2>exo6</h2>
+	<?php 
+	foreach ($dbh->query('SELECT title, performer, date, startTime FROM shows  ORDER BY title ASC ') as $row){
+		echo $row['title']." par ".$row['performer']." , le " .$row['date']." à ".$row['startTime']."<br/>" ;
+	}
+	?>
+	<h2>exo7</h2>
+	<?php 
+	foreach ($dbh->query('SELECT * FROM clients LEFT OUTER JOIN cards ON clients.cardNumber = cards.cardNumber ') as $row){
+		echo "Nom : ".$row['lastName']."<br/>"."Prénom : ".$row['firstName']."<br/>"."Date de naissance :".$row['birthDate']."<br/>";
+		if($row['card']){
+			echo 'Numéro de carte : '.$row['cardNumber']."<br/><br/>";
+		}else{
+			echo "Pas de carte de fidélité"."<br/><br/>";
+		}
+	}
+
+
+	?>
 </body>
 </html>
 
